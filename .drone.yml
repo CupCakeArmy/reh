@@ -12,18 +12,18 @@ pipeline:
     commands:
       - npm run build   
 
-  # copy:
-  #   image: appleboy/drone-scp
-  #   host: nicco.io
-  #   username: deploy
-  #   port: 1312
-  #   secrets: [ ssh_key ]
-  #   target: /srv/web/reh
-  #   source:
-  #     - ./dist
-  #     - ./index.html
-  #     - ./docker-compose.yml
-  #     - ./nginx.conf
-  #   when:
-  #     event: push
-  #     branch: master
+  copy:
+    image: appleboy/drone-scp
+    host: nicco.io
+    username: deploy
+    port: 1312
+    secrets: [ ssh_key ]
+    target: /srv/web/reh
+    source:
+      - ./dist
+      - ./index.html
+      - ./docker-compose.yml
+      - ./nginx.conf
+    when:
+      event: push
+      branch: master
