@@ -10,7 +10,7 @@ services:
       - traefik.enable=true
       - traefik.port=80
       - traefik.docker.network=traefik
-      - traefik.backend=dvb
+      - traefik.backend=reh
       - traefik.frontend.rule=Host:xn--rehfnger-3za.club
 
 networks:
