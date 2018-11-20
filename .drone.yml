@@ -23,6 +23,7 @@ pipeline:
       - ./dist
       - ./index.html
       - ./docker-compose.yml
+      - ./docker-compose.prod.yml
       - ./nginx.conf
     when:
       event: push
