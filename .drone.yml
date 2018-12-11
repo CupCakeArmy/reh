@@ -28,3 +28,13 @@ pipeline:
     when:
       event: push
       branch: master
+
+  run:
+    image: appleboy/drone-ssh
+    host: nicco.io
+    username: deploy
+    port: 1312
+    secrets: [ ssh_key ]
+    script:
+      - echo hello
+      - sudo echo world
