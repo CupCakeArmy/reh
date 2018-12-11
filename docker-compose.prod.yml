@@ -9,7 +9,7 @@ services:
       - traefik.port=80
       - traefik.docker.network=traefik
       - traefik.backend=reh
-      - traefik.frontend.rule=Host:xn--rehfnger-3za.club
+      - traefik.frontend.rule=Host:xn--rehfnger-3za.club,reh.nicco.io
 
 networks:
   traefik:
