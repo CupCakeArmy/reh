@@ -9,7 +9,7 @@ steps:
       - node -v
       - npm -v
       - npm i
-      - npm run build:prod
+      - npm run build
 
   - name: deploy
     image: cupcakearmy/drone-deploy
