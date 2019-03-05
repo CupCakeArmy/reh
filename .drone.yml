@@ -1,41 +1,34 @@
-pipeline:
-  
-  install:
+kind: pipeline
+name: default
+
+steps:
+  - name: build
     image: node:11-alpine
+    pull: always
     commands:
       - node -v
       - npm -v
       - npm i
-  
-  build:
-    image: node:11-alpine
-    commands:
-      - npm run build   
+      - npm run build:prod
 
-  copy:
-    image: appleboy/drone-scp
-    host: nicco.io
-    username: deploy
-    port: 1312
-    secrets: [ ssh_key ]
-    target: /srv/web/reh
-    source:
-      - ./dist
-      - ./index.html
-      - ./docker-compose.yml
-      - ./docker-compose.prod.yml
-      - ./nginx.conf
+  - name: deploy
+    image: cupcakearmy/drone-deploy
+    pull: always
+    environment:
+      PLUGIN_KEY:
+        from_secret: ssh_key
+    settings:
+      host: nicco.io
+      user: root
+      port: 1312
+      target: /srv/web/reh
+      sources:
+        - ./public
+        - ./docker-compose.yml
+        - ./docker-compose.prod.yml
+      commands:
+        - docker-compose -f docker-compose.yml -f docker-compose.prod.yml down
+        - docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
     when:
       event: push
       branch: master
-
-  run:
-    image: appleboy/drone-ssh
-    host: nicco.io
-    username: deploy
-    port: 1312
-    secrets: [ ssh_key ]
-    script:
-      - cd /srv/web/reh
-      - sudo docker-compose -f docker-compose.yml -f docker-compose.prod.yml down
-      - sudo docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
