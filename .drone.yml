@@ -23,7 +23,7 @@ steps:
       port: 1312
       target: /srv/web/reh
       sources:
-        - ./public
+        - ./dist
         - ./docker-compose.yml
         - ./docker-compose.prod.yml
       commands:
